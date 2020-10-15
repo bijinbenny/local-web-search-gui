@@ -2037,8 +2037,9 @@
 				}
 
 			.feature-grid .feature:nth-child(odd) .content, .feature-grid .feature:nth-child(odd) .image {
-				float: right;
-				margin-right: 5%;
+				float: left;
+				margin-left: 5%;
+				text-align: left;
 				/*text-align: right;*/ /*TEST*/
 			}
 
@@ -2765,7 +2766,7 @@
 
 		.wrapper.style3 {
 			background-attachment: fixed;
-			background-image: url("images/overlay.png"), url("../../images/banner.jpg");
+			background-image: url("images/overlay.png"), url("../../images/sanfran.jpg");
 			background-position: center center;
 			background-size: cover;
 		}
@@ -3126,7 +3127,7 @@
 	#banner {
 		padding: 16em 0 13em 0;
 		background-attachment: fixed;
-		background-image: url("images/overlay.png"), url("../../images/banner.jpg");
+		background-image: url("images/overlay.png"), url("../../images/sanfran.jpg");
 		background-position: center top;
 		background-size: cover;
 		line-height: 1.75;

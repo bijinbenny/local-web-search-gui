@@ -89,7 +89,7 @@ def reference():
     # POST data
     data = dict((key, request.form.get(key)) for key in request.form.keys())
     if not data.get("url", False) or not data.get("email", False) :
-        return "Vous n'avez pas renseigné l'URL ou votre email."
+        return "Please enter your URL and/or email address."
 
     # query search engine
     try :
@@ -98,9 +98,9 @@ def reference():
             'email':data["email"]
         })
     except :
-        return "Une erreur s'est produite, veuillez réessayer ultérieurement"
+        return "An error has occured. Please try again later."
 
-    return "Votre demande a bien été prise en compte et sera traitée dans les meilleurs délais."
+    return "You request has been received and will be processed."
 
 # -- JINJA CUSTOM FILTERS -- #
 

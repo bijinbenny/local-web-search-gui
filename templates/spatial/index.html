@@ -7,7 +7,7 @@
 <html>
 
 	<head>
-		<title>CaledoSearch by BYPROG</title>
+		<title>Python Web Search</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="static/spatial/assets/css/main.css" />
@@ -19,12 +19,12 @@
 		<!-- HOME -->
 		{%if not query%}
 		<section id="banner">
-			<h2>CaledoSearch</h2>
-			<p>Le moteur de recherche calédonien</p>
+			<h2>Python Web Search</h2>
+			<p>Your local search engine</p>
 			<ul class="actions">
 				<li>
 					<form action="/" method="GET" name="search" role="search">
-						<input id="query" name="query" type="text" value="" placeholder="Vous recherchez ?"/>
+						<input id="query" name="query" type="text" value="" placeholder="Search web"/>
 					</form>
 				</li>
 			</ul>
@@ -35,22 +35,19 @@
 		{%if query%}
 		<section id="three" class="wrapper style1">
 			<div class="image rounded" style="float:left;margin-left:30px;top:-20px;margin-right:20px">
-				<a href="/"><img src="static/spatial/images/caledonie.jpg" alt="" style="width:100px;height:100px"/></a>
+				<a href="/"><img src="static/spatial/images/paint.jpg" alt="" style="width:100px;height:100px"/></a>
 			</div>
 			<div class="container">
 				<form action="/" method="GET" name="search" role="search">
 					<header class="major special">
 						<input name="query" id="query" type="text" style="display:none" value="{{query}}"></input>
-						<h2 id="queryeditable" contenteditable="true">{{query}} <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg></h2>
+						<h2 id="queryeditable" style="text-transform:none" contenteditable="true">{{query}} <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg></h2>
 						<p>About {{total}} results ({{response_time}} seconds)</p>
 					</header>
 				</form>
 				<div class="feature-grid">
 					{%for result in results%}
 					<div class="feature">
-						<div class="image rounded">
-							<img style="{%if not result.thumbnail%}visibility:hidden{%endif%}" src="{{result.thumbnail}}" alt="" />
-						</div>
 						<div class="content">
 							<header>
 								<h4><a href="{{result.url}}">{{result.title|safe|truncate_title}}</a></h4>
@@ -58,6 +55,9 @@
 							</header>
 							<p>{{result.description|safe|truncate_description}}</p>
 						</div>
+						<div class="image rounded" >
+							<img style="{%if not result.thumbnail%}visibility:hidden{%endif%}" src="{{result.thumbnail}}" alt="" />
+						</div> 
 					</div>
 					{%endfor%}
 				</div>
@@ -87,18 +87,18 @@
 		<section id="four" class="wrapper style3 special">
 			<div class="container">
 				<header class="major">
-					<h2>Un site n'est pas référencé ?</h2>
+					<h2>Your site is not referenced ?</h2>
 				</header>
 				<form method="post" name="reference" method="POST" action="#">
 					<div class="row uniform 50%">
 						<div class="4u 12u$(xsmall)">
-							<input type="text" name="url" value="" placeholder="URL du site" />
+							<input type="text" name="url" value="" placeholder="Site URL" />
 						</div>
 						<div class="4u$ 12u$(xsmall)">
 							<input type="email" name="email" value="" placeholder="Email" />
 						</div>
 						<div class="4u$ 12u$(xsmall)" style="clear:none;">
-							<input type="submit" value="Envoyer" class="special small" />
+							<input type="submit" value="Submit" class="special small" />
 						</div>
 					</div>
 				</form>
@@ -122,12 +122,11 @@
 		<footer id="footer">
 			<div class="container">
 				<ul class="icons">
-					<li><a href="https://www.byprog.com" target="_blank" class="icon fa-globe"></a></li>
-					<li><a href="https://www.linkedin.com/in/anthonysigogne/" target="_blank" class="icon fa-linkedin"></a></li>
-					<li><a href="https://github.com/AnthonySigogne" target="_blank" class="icon fa-github"></a></li>
+					<li><a href="https://www.linkedin.com/in/bijin-benny/" target="_blank" class="icon fa-linkedin"></a></li>
+					<li><a href="https://github.com/bijinbenny" target="_blank" class="icon fa-github"></a></li>
 				</ul>
 				<ul class="copyright">
-					<li>&copy; Byprog - Anthony Sigogne</li>
+					<li>&copy; Bijin Benny</li>
 					<!--li>Design: <a href="http://templated.co">TEMPLATED</a></li-->
 				</ul>
 			</div>
@@ -138,7 +137,7 @@
 		<script src="static/spatial/assets/js/skel.min.js"></script>
 		<script src="static/spatial/assets/js/util.js"></script>
 		<script src="static/spatial/assets/js/main.js"></script>
-		<script src="static/spatial/assets/js/paginate.js"></script>
+		<!--<script src="static/spatial/assets/js/paginate.js"></script> -->
 
 	</body>
 </html>
