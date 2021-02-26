@@ -1,13 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 """
-UI - a simple web search engine.
-The goal is to index an infinite list of URLs (web pages),
-and then be able to quickly search relevant URLs against a query.
-
-See https://github.com/AnthonySigogne/web-search-engine for more information.
+Client facing flask application that receives search requests from the user and
+ forwards the requests to the back-end server for processing. The results from
+ the back-end are received and displayed on the browser.
 """
+
 
 __author__ = "Anthony Sigogne"
 __copyright__ = "Copyright 2017, Byprog"
@@ -20,32 +18,32 @@ import requests
 from urllib import parse
 from flask import Flask, request, jsonify, render_template
 
-# init flask app and env variables
+#Initialize flask app and load environment variables
 app = Flask(__name__)
 host = os.getenv("HOST")
 port = os.getenv("PORT")
 
+
+"""
+End point for search requests. Receives search queries and forwards it to
+back-end.
+Method          : HTTP GET
+Request Parameters : query - The search query
+                     hits  - The number of results to be returned
+                     start - Start number for the hits (for pagination purpose)
+"""
 @app.route("/", methods=['GET'])
 def search():
-    """
-    URL : /
-    Query engine to find a list of relevant URLs.
-    Method : POST or GET (no query)
-    Form data :
-        - query : the search query
-        - hits : the number of hits returned by query
-        - start : the start of hits
-    Return a template view with the list of relevant URLs.
-    """
-    # GET data
+   
+    #Parse and analyze HTTP GET request.
     query = request.args.get("query", None)
     start = request.args.get("start", 0, type=int)
     hits = request.args.get("hits", 10, type=int)
     if start < 0 or hits < 0 :
         return "Error, start or hits cannot be negative numbers"
 
+    #If valid query exists, create a request and forward to back-end server
     if query :
-        # query search engine
         try :
             r = requests.post('http://%s:%s/search'%(host, port), data = {
                 'query':query,
@@ -55,13 +53,14 @@ def search():
         except :
             return "Error, check your installation"
 
-        # get data and compute range of results pages
+        #Get response data and compute range of results pages
         data = r.json()
         i = int(start/hits)
         maxi = 1+int(data["total"]/hits)
-        range_pages = range(i-5,i+5 if i+5 < maxi else maxi) if i >= 6 else range(0,maxi if maxi < 10 else 10)
+        range_pages = range(i-5,i+5 if i+5 < maxi else maxi) if i >= 6 
+        else range(0,maxi if maxi < 10 else 10)
 
-        # show the list of matching results
+        #Display the list of relevant results
         return render_template('spatial/index.html', query=query,
             response_time=r.elapsed.total_seconds(),
             total=data["total"],
@@ -72,37 +71,12 @@ def search():
             page=i,
             maxpage=maxi-1)
 
-    # return homepage (no query)
+    #Return to homepage (no query)
     return render_template('spatial/index.html')
 
-@app.route("/reference", methods=['POST'])
-def reference():
-    """
-    URL : /reference
-    Request the referencing of a website.
-    Method : POST
-    Form data :
-        - url : url to website
-        - email : contact email
-    Return homepage.
-    """
-    # POST data
-    data = dict((key, request.form.get(key)) for key in request.form.keys())
-    if not data.get("url", False) or not data.get("email", False) :
-        return "Please enter your URL and/or email address."
 
-    # query search engine
-    try :
-        r = requests.post('http://%s:%s/reference'%(host, port), data = {
-            'url':data["url"],
-            'email':data["email"]
-        })
-    except :
-        return "An error has occured. Please try again later."
 
-    return "You request has been received and will be processed."
-
-# -- JINJA CUSTOM FILTERS -- #
+#Jinja Custom filters for presentation#
 
 @app.template_filter('truncate_title')
 def truncate_title(title):
